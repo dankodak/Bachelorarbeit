@@ -1,17 +1,17 @@
 clc; clear;
 %Initialisierung der Punkte, Gitterweite, Epsilon und der Gleichungen
-P = [0 0.2; 0.4 0.4; 0.2 0;1 0;1 0.5;0.5 0.5;0.5 1;0 1;0 0.2];
+P = [0 0;0 1;1 1;1 0];
 m = 50;
-ep = 0.000002;
-f = @(x,y) -5/4 .* pi^2 .* sin(pi.*x).*cos(pi/2 .* y);
-g = @(x,y) sin(pi*x).*cos(pi/2 *y);
+f = @(x,y) - 2*pi^2*sin(pi*x).*sin(pi*y);
+g = @(x,y) 0;
+realSol = @(x,y) sin(pi*x).*sin(pi*y);
 
 %Bestimmung der Punkte, Ableitungen und der Kollokationsmatrix
 [Xin, Xbd, Nin, Nbd] = collocation_points(P,m);
 [rbf, lap_rbf] = RBFderivatives();
 Xte = [Xin;Xbd];
 
-sol = solvePDE(rbf, lap_rbf, Xin, Xbd, Xte, Nin, Nbd, f, g);
+sol = solvePDE(rbf, lap_rbf, Xin, Xbd, Xte, Nin, Nbd, f, g, realSol);
 
 
 % [xx, yy] = ndgrid(linspace(0, 1, m));

@@ -1,6 +1,6 @@
-function [sol] = solvePDE(rbf, lap_rbf, Xin, Xbd, Xte, Nin, Nbd, f, g)
+function [sol] = solvePDE(rbf, lap_rbf, Xin, Xbd, Xte, Nin, Nbd, f, g, realSol)
 
-gamma = -2:0.25:2;
+gamma = -1.5:0.25:3;
 gamma = 10.^gamma;
 
 %Auswertung der DGL an den Teststellen
@@ -9,7 +9,7 @@ b(1:Nin) = f(Xte(1:Nin,1),Xte(1:Nin,2));
 b(Nin+1:Nin+Nbd) = g(Xte(Nin+1:Nin+Nbd,1),Xte(Nin+1:Nin+Nbd,2));
 
 %Echte Lösung
-real = g(Xte(1:Nin+Nbd,1),Xte(1:Nin+Nbd,2));
+real = realSol(Xte(1:Nin+Nbd,1),Xte(1:Nin+Nbd,2));
 
 
 error = zeros(size(gamma));
