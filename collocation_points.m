@@ -1,42 +1,29 @@
-function [Xin, Xbd, Nin, Nbd] = collocation_points(P,m)
-xv = P(:,1);
-yv = P(:,2);
+function [Xin, Xbd, Nin, Nbd] = collocation_points(w,m)
+eps = 10^-10
 
 %Gitter erstellen
-[xx, yy] = ndgrid(linspace(0, 1, m));
+[xx, yy] = ndgrid(linspace(-1, 1, m));
 X = [xx(:), yy(:)];
-xq = X(:,1);
-yq = X(:,2);
 
 %Bestimmen der Punkte im Inneren
-[in,on] = inpolygon(xq,yq,xv,yv);
-in = xor(in,on);
-Xin = X(in,:);
+val = w(X(:,1), X(:,2));
+bool = val > 0 + eps;
+Xin = X(bool,:);
 
 %Bestimmen der Punkte auf dem Rand
-Xbd = zeros(1,2);
-k = 1;
-for i = 1:size(P)-1
-    amount = floor(m*norm(P(i+1,:)-P(i,:)));
-    dir = (P(i+1,:)-P(i,:))/amount;
-    for j=1:amount
-        Xbd(k,:) = P(i,:) + j*dir;
-        k = k + 1;
-    end
-end
+lin = linspace(0,2*pi,m);
+Xbd = [sin(lin).',cos(lin).'];
 
 [Nin,~] = size(Xin);
 [Nbd,~] = size(Xbd);
 
-% Plot
+% % Plot
 % figure
 % 
-% plot(xv,yv) % polygon
 % axis equal
 % 
 % hold on
-% plot(xq(in),yq(in),'r+') % points inside
-% plot(xq(~in),yq(~in),'bo') % points outside
-% plot(Xbd(:,1),Xbd(:,2),'gd')
+% plot(Xin(:,1),Xin(:,2),'r+') % points inside
+% plot(Xbd(:,1),Xbd(:,2),'bo') % points outside
 % hold off
 end

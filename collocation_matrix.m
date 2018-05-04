@@ -20,7 +20,7 @@ yphdist = pdist2(yph,X);
 ymhdist = pdist2(ymh,X);
 
 %Erstellen der Bloecke
-Alaps = lap_rbf(ep , B(1:Nin,:));
+% Alap = lap_rbf(ep , B(1:Nin,:));
 Alap = (rbf(ep, xmhdist(1:Nin,:)) + rbf(ep, xphdist(1:Nin,:)) + rbf(ep, ymhdist(1:Nin,:)) + rbf(ep,yphdist(1:Nin,:)) - 4*rbf(ep , B(1:Nin,:)))/h^2;
 
 

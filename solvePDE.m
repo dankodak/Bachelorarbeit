@@ -39,5 +39,5 @@ for i = 1:length(gamma)
 end
 figure
 semilogx(gamma, error);
-axis([-inf inf 0 1])
+% axis([-inf inf 0 1])
 end
