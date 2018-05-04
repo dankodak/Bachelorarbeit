@@ -1,6 +1,6 @@
 function [sol] = solvePDE(rbf, lap_rbf, Xin, Xbd, Xte, Nin, Nbd, f, g, realSol)
 
-gamma = -1.5:0.25:3;
+gamma = -1.5:0.125:1.75;
 gamma = 10.^gamma;
 
 %Auswertung der DGL an den Teststellen
