@@ -1,4 +1,4 @@
-function [sol] = solvePDE(rbf, lap_rbf, Xin, Xbd, Xte, Nin, Nbd, f, g, realSol)
+function [bestgamma,retalpha] = solvePDE(rbf, lap_rbf, Xin, Xbd, Xte, Nin, Nbd, f, g, realSol)
 
 gamma = -1.5:0.125:1.75;
 gamma = 10.^gamma;
@@ -32,10 +32,12 @@ for i = 1:length(gamma)
         minerror = error(i);
         bestgamma = gamma(i);
         sol = s_u;
+        retalpha = alpha;
     end
     
     
 end
+figure
 semilogx(gamma, error);
-
+axis([-inf inf 0 1])
 end

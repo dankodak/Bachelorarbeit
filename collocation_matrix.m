@@ -1,5 +1,5 @@
 function A_Lambda = collocation_matrix(rbf, lap_rbf, ep, Xin, Xbd)
-h = 0.01;
+h = 0.001;
 
 
 %Erstellen der distance-Matrix
@@ -19,11 +19,9 @@ xmhdist = pdist2(xmh,X);
 yphdist = pdist2(yph,X);
 ymhdist = pdist2(ymh,X);
 
-
 %Erstellen der Bloecke
-% Alap = lap_rbf(ep , B(1:Nin,:));
+Alaps = lap_rbf(ep , B(1:Nin,:));
 Alap = (rbf(ep, xmhdist(1:Nin,:)) + rbf(ep, xphdist(1:Nin,:)) + rbf(ep, ymhdist(1:Nin,:)) + rbf(ep,yphdist(1:Nin,:)) - 4*rbf(ep , B(1:Nin,:)))/h^2;
-
 
 
 Arbf = rbf(ep,B(Nin + 1 : Nin + Nbd,:));

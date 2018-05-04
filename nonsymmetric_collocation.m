@@ -1,7 +1,8 @@
 clc; clear;
 %Initialisierung der Punkte, Gitterweite, Epsilon und der Gleichungen
 P = [0 0;0 1;1 1;1 0];
-m = 50;
+m = 12;
+n = 50;
 f = @(x,y) - 2*pi^2*sin(pi*x).*sin(pi*y);
 g = @(x,y) 0;
 realSol = @(x,y) sin(pi*x).*sin(pi*y);
@@ -11,23 +12,18 @@ realSol = @(x,y) sin(pi*x).*sin(pi*y);
 [rbf, lap_rbf] = RBFderivatives();
 Xte = [Xin;Xbd];
 
-sol = solvePDE(rbf, lap_rbf, Xin, Xbd, Xte, Nin, Nbd, f, g, realSol);
+[gamma, alpha] = solvePDE(rbf, lap_rbf, Xin, Xbd, Xte, Nin, Nbd, f, g, realSol);
 
 
-% [xx, yy] = ndgrid(linspace(0, 1, m));
-% X = [xx(:), yy(:)];
-% A_eval2 = evaluation_matrix(rbf, ep, Xin, Xbd, X);
-% s_u2 = A_eval2 * alpha;
-% s_u2 = reshape(s_u2,[m,m]);
-% subplot(2,1,1)
-% surf(xx,yy,s_u2)
-% subplot(2,1,2)
-% surf(xx,yy,g(xx,yy))
+[xx, yy] = ndgrid(linspace(0, 1, n));
+X = [xx(:), yy(:)];
+A_eval2 = evaluation_matrix(rbf, gamma, Xin, Xbd, X);
+s_u2 = A_eval2 * alpha;
+s_u2 = reshape(s_u2,[n,n]);
+figure
+subplot(2,1,1)
+contour(xx,yy,s_u2)
+subplot(2,1,2)
+contour(xx,yy,realSol(xx,yy))
 
-
-% [xx,yy] = meshgrid(Xte(:,1),Xte(:,2));
-% a = size(xx)
-% contourf(xx, yy, reshape(sol, [a,a]))
-
-
-%pcolor(Xte(:,1),Xte(:,2),sol)
+maxerror = max(max(abs(s_u2 - realSol(xx,yy))))
