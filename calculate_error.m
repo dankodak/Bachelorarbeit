@@ -1,4 +1,4 @@
-function error = calculate_error(alpha, Xin, Xbd, Xte, gamma, rbf, f)
+function error = calculate_error(alpha, Xin, Xte, gamma, rbf, f, w)
 h = 0.001;
 
 
@@ -7,11 +7,11 @@ xmh = [Xte(:,1)-h,Xte(:,2)];
 yph = [Xte(:,1),Xte(:,2)+h];
 ymh = [Xte(:,1),Xte(:,2)-h];
 
-Xte_eval = evaluation_matrix(rbf,gamma, Xin, Xbd, Xte);
-xph_eval = evaluation_matrix(rbf,gamma, Xin, Xbd, xph);
-xmh_eval = evaluation_matrix(rbf,gamma, Xin, Xbd, xmh);
-yph_eval = evaluation_matrix(rbf,gamma, Xin, Xbd, yph);
-ymh_eval = evaluation_matrix(rbf,gamma, Xin, Xbd, ymh);
+Xte_eval = evaluation_matrix(rbf,gamma, Xin, Xte, w);
+xph_eval = evaluation_matrix(rbf,gamma, Xin, xph, w);
+xmh_eval = evaluation_matrix(rbf,gamma, Xin, xmh, w);
+yph_eval = evaluation_matrix(rbf,gamma, Xin, yph, w);
+ymh_eval = evaluation_matrix(rbf,gamma, Xin, ymh, w);
 
 Xte_sol = Xte_eval * alpha;
 xph_sol = xph_eval * alpha;

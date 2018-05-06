@@ -1,12 +1,10 @@
-function [bestgamma,retalpha] = solvePDE(rbf, lap_rbf, Xin, Xbd, Xte, Nin, Nbd, f, g, realSol)
+function [bestgamma,retalpha] = solvePDE(rbf, w, Xin, Xte, f)
 
-gamma = -1.5:0.125:1.75;
+gamma = -1.5:0.125:1;
 gamma = 10.^gamma;
 
 %Auswertung der DGL an den Teststellen
-b = zeros(Nin+Nbd,1);
-b(1:Nin) = f(Xte(1:Nin,1),Xte(1:Nin,2));
-b(Nin+1:Nin+Nbd) = g(Xte(Nin+1:Nin+Nbd,1),Xte(Nin+1:Nin+Nbd,2));
+b = f(Xin(:,1),Xin(:,2));
 
 
 error = zeros(size(gamma));
@@ -14,13 +12,13 @@ minerror = Inf;
 bestgamma = gamma(1);
 
 for i = 1:length(gamma)
-    A_Lambda = collocation_matrix(rbf, lap_rbf, gamma(i), Xin, Xbd);
+    A_Lambda = collocation_matrix(rbf, w, gamma(i), Xin);
 
     %Approximieren der DGL
     alpha = A_Lambda\b;
     
     %Vergleich
-    error(i) = calculate_error(alpha, Xin, Xbd, Xte, gamma(i), rbf, f);
+    error(i) = calculate_error(alpha, Xin, Xte, gamma(i), rbf, f, w);
     if error(i) < minerror
         minerror = error(i);
         bestgamma = gamma(i);
