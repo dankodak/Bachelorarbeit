@@ -10,11 +10,11 @@ xmh = [X(:,1)-h,X(:,2)];
 yph = [X(:,1),X(:,2)+h];
 ymh = [X(:,1),X(:,2)-h];
 
-wX = repmat(w(X(:,1),xph(:,2)),[1,length(X)]);
-wxph = repmat(w(xph(:,1),xph(:,2)),[1,length(xph)]);
-wxmh = repmat(w(xmh(:,1),xmh(:,2)),[1,length(xph)]);
-wyph = repmat(w(yph(:,1),yph(:,2)),[1,length(xph)]);
-wymh = repmat(w(ymh(:,1),ymh(:,2)),[1,length(xph)]);
+wX = repmat(w(X),[1,length(X)]);
+wxph = repmat(w(xph),[1,length(xph)]);
+wxmh = repmat(w(xmh),[1,length(xph)]);
+wyph = repmat(w(yph),[1,length(xph)]);
+wymh = repmat(w(ymh),[1,length(xph)]);
 
 
 

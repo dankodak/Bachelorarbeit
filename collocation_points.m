@@ -6,7 +6,7 @@ eps = 10^-10;
 X = [xx(:), yy(:)];
 
 %Bestimmen der Punkte im Inneren
-val = w(X(:,1), X(:,2));
+val = w(X);
 bool = val > 0 + eps;
 Xin = X(bool,:);
 

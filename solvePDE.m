@@ -1,11 +1,11 @@
 function [bestgamma,retalpha] = solvePDE(rbf, w, Xin, Xte, f)
 
-gamma = -1.5:0.125:1;
+gamma = -1.5:0.125:3;
 gamma = 10.^gamma;
 
 %Auswertung der DGL an den Teststellen
-b = f(Xin(:,1),Xin(:,2));
-
+% b = f(Xin(:,1),Xin(:,2));
+b = f(Xin);
 
 error = zeros(size(gamma));
 minerror = Inf;

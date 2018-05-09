@@ -21,7 +21,8 @@ ymh_sol = ymh_eval * alpha;
 
 disc = (xph_sol + xmh_sol + yph_sol + ymh_sol - 4*Xte_sol)/h^2;
 
-real = f(Xte(:,1), Xte(:,2));
+% real = f(Xte(:,1), Xte(:,2));
+real = f(Xte);
 
 error = max(abs(disc-real));
 end
