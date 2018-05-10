@@ -1,6 +1,6 @@
 clc; clear;
 %Initialisierung der Punkte, Gitterweite, Epsilon und der Gleichungen
-m = 15;
+m = 4;
 n = 100;
 
 w = @(x) 1 - x(:,1).^2 - x(:,2).^2;
@@ -49,3 +49,12 @@ surf(xx,yy,realSolPlot(xx,yy))
 % axis([-1 1 -1 1 0 0.65])
 
 maxerror = max(max(abs(s_u - realSolPlot(xx,yy))))
+
+a = linspace(0,2*pi,1000).';
+b = [cos(a),sin(a)];
+A_eval2 = evaluation_matrix(rbf, gamma, Xin, b, w);
+s_u2 = A_eval2 * alpha;
+
+figure
+plot(a,s_u2)
+
