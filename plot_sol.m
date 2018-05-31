@@ -1,6 +1,5 @@
-function plot_sol(Xin, Xte, xlow, xup, ylow, yup, w, rbf, gamma, alpha, n, realSolPlot)
-%plot_sol Summary of this function goes here
-%   Detailed explanation goes here
+function plot_sol(Xin, Xte, xlow, xup, ylow, yup, w, rbf, gamma, alpha, realSolPlot)
+n = 100;
 
 
 % Plot Kollokations- und Testpunkte
@@ -35,7 +34,6 @@ subplot(2,2,3)
 surf(xx,yy,s_u)
 subplot(2,2,4)
 surf(xx,yy,z)
-
 
 end
 

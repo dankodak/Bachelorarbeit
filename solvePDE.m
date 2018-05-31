@@ -19,7 +19,7 @@ for i = 1:length(gamma)
     
     %Vergleich
     error(i) = calculate_error(alpha, Xin, Xte, gamma(i), rbf, f, w, realSol);
-    condition(i) = cond(A_Lambda);
+%     condition(i) = cond(A_Lambda);
     if error(i) < minerror
         minerror = error(i);
         bestgamma = gamma(i);
@@ -62,14 +62,13 @@ while bestgamma == gamma(end)
 end
 
 
-figure
-subplot(1,2,1)
-loglog(gamma, error);
-xlabel('gamma')
-ylabel('error')
-subplot(1,2,2)
-loglog(gamma, condition);
-xlabel('gamma')
-ylabel('condition')
-% axis([-inf inf 0 1])
+% figure
+% subplot(1,2,1)
+% loglog(gamma, error);
+% xlabel('gamma')
+% ylabel('error')
+% subplot(1,2,2)
+% loglog(gamma, condition);
+% xlabel('gamma')
+% ylabel('condition')
 end
