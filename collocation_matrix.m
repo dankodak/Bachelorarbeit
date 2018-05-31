@@ -24,11 +24,9 @@ xmhdist = pdist2(xmh,X);
 yphdist = pdist2(yph,X);
 ymhdist = pdist2(ymh,X);
 
-
-
 %Erstellen der Bloecke
 Alap = (rbf(gamma, xmhdist).*wxmh + rbf(gamma, xphdist).*wxph + rbf(gamma, ymhdist).*wymh + rbf(gamma,yphdist).*wyph - 4*rbf(gamma , B).*wX)/h^2;
-
+% Alap = lap_rbf(ep , B(1:Nin,:));
 
 %Zusammensetzen
 A_Lambda = Alap;
