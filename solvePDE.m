@@ -1,4 +1,4 @@
-function [bestgamma,retalpha] = solvePDE(rbf, w, Xin, Xte, f, realSol)
+function [bestgamma,retalpha] = solvePDE(rbf, lap_rbf, w, Xin, Xte, f, realSol)
 step = 0.125;
 gammapot = -1.5:step:3;
 gamma = 10.^gammapot;
@@ -12,13 +12,13 @@ minerror = Inf;
 bestgamma = gamma(1);
 
 for i = 1:length(gamma)
-    A_Lambda = collocation_matrix(rbf, w, gamma(i), Xin);
+    A_Lambda = collocation_matrix(rbf, lap_rbf, w, gamma(i), Xin);
 
     %Approximieren der DGL
     alpha = A_Lambda\b;
     
     %Vergleich
-    error(i) = calculate_error(alpha, Xin, Xte, gamma(i), rbf, f, w, realSol);
+    error(i) = calculate_error(alpha, Xin, Xte, gamma(i), rbf, lap_rbf, f, w, realSol);
 %     condition(i) = cond(A_Lambda);
     if error(i) < minerror
         minerror = error(i);
@@ -62,13 +62,13 @@ while bestgamma == gamma(end)
 end
 
 
-% figure
-% subplot(1,2,1)
-% loglog(gamma, error);
-% xlabel('gamma')
-% ylabel('error')
-% subplot(1,2,2)
-% loglog(gamma, condition);
-% xlabel('gamma')
-% ylabel('condition')
+figure
+subplot(1,2,1)
+loglog(gamma, error);
+xlabel('gamma')
+ylabel('error')
+subplot(1,2,2)
+loglog(gamma, condition);
+xlabel('gamma')
+ylabel('condition')
 end

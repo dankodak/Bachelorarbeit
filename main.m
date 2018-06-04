@@ -2,8 +2,11 @@ clc; clear;
 grid = 1;
 m = 50;
 error = zeros(size(m));
+k = 1;
 for i = m
-    error(i) = nonsymmetric_collocation(i, grid);
+    i
+    error(k) = nonsymmetric_collocation(i, grid);
+    k = k + 1;
 end
 figure
 semilogy(error)

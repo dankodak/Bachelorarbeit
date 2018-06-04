@@ -1,13 +1,13 @@
 function [maxerror] = nonsymmetric_collocation(m, grid)
 
-    [rbf, f, w, realSol, realSolPlot] = allFunctions();
+    [rbf, lap_rbf, f, w, realSol, realSolPlot] = allFunctions();
 
     % Bestimmung der Kollokations- und Testpunkte
     [Xin, xlow, xup, ylow, yup] = collocation_points(w,m, grid);
     Xte = test_points(xlow, xup, ylow, yup, m, w);
 
     % Loese die PDE
-    [gamma, alpha] = solvePDE(rbf, w, Xin, Xte, f, realSol);
+    [gamma, alpha] = solvePDE(rbf, lap_rbf, w, Xin, Xte, f, realSol);
 
 
 %     plot_sol(Xin, Xte, xlow, xup, ylow, yup, w, rbf, gamma, alpha, realSolPlot)
