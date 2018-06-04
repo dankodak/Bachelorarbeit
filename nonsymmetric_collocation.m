@@ -11,8 +11,8 @@ function [maxerror] = nonsymmetric_collocation(m, grid)
 
 
 %     plot_sol(Xin, Xte, xlow, xup, ylow, yup, w, rbf, gamma, alpha, realSolPlot)
-    z = realSolPlot(Xte);
-    A_eval = evaluation_matrix(rbf, gamma, Xin, Xte, w);
+    z = realSolPlot(Xin);
+    A_eval = evaluation_matrix(rbf, gamma, Xin, Xin, w);
     s_u = A_eval*alpha;
     maxerror = max(max(abs(s_u - z)));
 end

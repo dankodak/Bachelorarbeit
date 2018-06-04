@@ -1,7 +1,6 @@
 function error = calculate_error(alpha, Xin, Xte, gamma, rbf, lap_rbf, f, w, realSol)
 if realSol([0.5,0.5]) == 0
-    B = pdist2(Xte,Xin);
-    A = lap_rbf(gamma, B, Xte, Xin);
+    A = lap_rbf(gamma, Xte, Xin);
     disc = A*alpha;
     real = f(Xte);
     error = max(abs(disc-real));

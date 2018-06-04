@@ -1,6 +1,6 @@
 clc; clear;
 grid = 1;
-m = 50;
+m = 30;
 error = zeros(size(m));
 k = 1;
 for i = m

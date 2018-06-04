@@ -12,8 +12,8 @@ minerror = Inf;
 bestgamma = gamma(1);
 
 for i = 1:length(gamma)
-    A_Lambda = collocation_matrix(rbf, lap_rbf, w, gamma(i), Xin);
-
+    % Kollokationsmatrix erstellen
+    A_Lambda = lap_rbf(gamma(i), Xin, Xin);
     %Approximieren der DGL
     alpha = A_Lambda\b;
     
