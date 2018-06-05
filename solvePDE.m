@@ -27,39 +27,39 @@ for i = 1:length(gamma)
     end
 end
 
-while bestgamma == gamma(1)
-    gammapot = [(gammapot(1) - step) , gammapot];
-    gamma = [10^gammapot(1) gamma];
-    A_Lambda = collocation_matrix(rbf, w, gamma(1), Xin);
-
-    %Approximieren der DGL
-    alpha = A_Lambda\b;
-    
-    error = [calculate_error(alpha, Xin, Xte, gamma(1), rbf, f, w, realSol) error];
-    condition = [cond(A_Lambda) condition];
-    if error(1) < minerror
-        minerror = error(1);
-        bestgamma = gamma(1);
-        retalpha = alpha;
-    end
-end
-
-while bestgamma == gamma(end)
-    gammapot = [gammapot , (gammapot(end) + step)];
-    gamma = [gamma 10^gammapot(end)];
-    A_Lambda = collocation_matrix(rbf, w, gamma(end), Xin);
-
-    %Approximieren der DGL
-    alpha = A_Lambda\b;
-    
-    error = [error calculate_error(alpha, Xin, Xte, gamma(1), rbf, f, w, realSol)];
-    condition = [condition cond(A_Lambda)];
-    if error(end) < minerror
-        minerror = error(end);
-        bestgamma = gamma(end);
-        retalpha = alpha;
-    end
-end
+% while bestgamma == gamma(1)
+%     gammapot = [(gammapot(1) - step) , gammapot];
+%     gamma = [10^gammapot(1) gamma];
+%     A_Lambda = collocation_matrix(rbf, w, gamma(1), Xin);
+% 
+%     %Approximieren der DGL
+%     alpha = A_Lambda\b;
+%     
+%     error = [calculate_error(alpha, Xin, Xte, gamma(1), rbf, f, w, realSol) error];
+%     condition = [cond(A_Lambda) condition];
+%     if error(1) < minerror
+%         minerror = error(1);
+%         bestgamma = gamma(1);
+%         retalpha = alpha;
+%     end
+% end
+% 
+% while bestgamma == gamma(end)
+%     gammapot = [gammapot , (gammapot(end) + step)];
+%     gamma = [gamma 10^gammapot(end)];
+%     A_Lambda = collocation_matrix(rbf, w, gamma(end), Xin);
+% 
+%     %Approximieren der DGL
+%     alpha = A_Lambda\b;
+%     
+%     error = [error calculate_error(alpha, Xin, Xte, gamma(1), rbf, f, w, realSol)];
+%     condition = [condition cond(A_Lambda)];
+%     if error(end) < minerror
+%         minerror = error(end);
+%         bestgamma = gamma(end);
+%         retalpha = alpha;
+%     end
+% end
 
 
 figure
