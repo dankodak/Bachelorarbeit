@@ -16,12 +16,12 @@ hold off
 % Plot Loesung
 [xx, yy] = ndgrid(linspace(xlow, xup, n),linspace(ylow, yup, n));
 X = [xx(:), yy(:)];
-bool = w(X) < 0;
+bool = w(X(:,1), X(:,2)) < 0;
 A_eval = evaluation_matrix(rbf, gamma, Xin, X, w);
 s_u = A_eval * alpha;
 s_u(bool) = 0;
 s_u = reshape(s_u,[n,n]);
-z = realSolPlot(X);
+z = realSolPlot(X(:,1), X(:,2));
 z(bool) = 0;
 z = reshape(z, [n,n]);
 

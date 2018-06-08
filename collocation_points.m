@@ -11,7 +11,7 @@ yup = 1;
 % check upper y bound
 while true
     points = linspace(xlow, xup).';
-    val = w([points ones(size(points,1),1).*yup]);
+    val = w(points, ones(size(points,1),1).*yup);
     if max(val) > 0 + eps
         yup = 2*yup;
         continue
@@ -22,7 +22,7 @@ end
 % check lower y bound
 while true
     points = linspace(xlow, xup).';
-    val = w([points ones(size(points,1),1).*ylow]);
+    val = w(points, ones(size(points,1),1).*ylow);
     if max(val) > 0 + eps
         ylow = 2*ylow;
         continue
@@ -33,7 +33,7 @@ end
 % check upper x bound
 while true
     points = linspace(ylow, yup).';
-    val = w([ones(size(points,1),1).*xup points]);
+    val = w(ones(size(points,1),1).*xup, points);
     if max(val) > 0 + eps
         xup = 2*xup;
         continue
@@ -44,7 +44,7 @@ end
 % check lower x bound
 while true
     points = linspace(ylow, yup).';
-    val = w([ones(size(points,1),1).*xlow points]);
+    val = w(ones(size(points,1),1).*xlow, points);
     if max(val) > 0 + eps
         xlow = 2*xlow;
         continue
@@ -59,7 +59,7 @@ if grid == 1
     X = [xx(:), yy(:)];
 
     %Bestimmen der Punkte im Inneren
-    val = w(X);
+    val = w(X(:,1), X(:,2));
     bool = val > 0 + eps;
     Xin = X(bool,:);
 else
@@ -69,7 +69,7 @@ else
         pointx = xlow + (xup - xlow)*rand(1,1);
         pointy = ylow + (yup - ylow)*rand(1,1);
         point = [pointx pointy];
-        val = w(point);
+        val = w(point(1), point(2));
         if val > 0 + eps
             Xin(k,:) = point;
             k=k+1;

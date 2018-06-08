@@ -4,7 +4,7 @@ gammapot = -1.5:step:3;
 gamma = 10.^gammapot;
 
 %Auswertung der DGL an den Teststellen
-b = f(Xin);
+b = f(Xin(:,1), Xin(:,2));
 
 error = zeros(size(gamma));
 condition = zeros(size(gamma));
@@ -13,7 +13,7 @@ bestgamma = gamma(1);
 
 for i = 1:length(gamma)
     % Kollokationsmatrix erstellen
-    A_Lambda = lap_rbf(gamma(i), Xin, Xin);
+    A_Lambda = lap_rbf(gamma(i), Xin(:,1), Xin(:,2), Xin(:,1).', Xin(:,2).');
     %Approximieren der DGL
     alpha = A_Lambda\b;
     
