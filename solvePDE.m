@@ -61,14 +61,14 @@ end
 %     end
 % end
 
-
-figure
-subplot(1,2,1)
-loglog(gamma, error);
-xlabel('gamma')
-ylabel('error')
-subplot(1,2,2)
-loglog(gamma, condition);
-xlabel('gamma')
-ylabel('condition')
+% 
+% figure
+% subplot(1,2,1)
+% loglog(gamma, error);
+% xlabel('gamma')
+% ylabel('error')
+% subplot(1,2,2)
+% loglog(gamma, condition);
+% xlabel('gamma')
+% ylabel('condition')
 end
