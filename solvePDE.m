@@ -1,4 +1,4 @@
-function [bestgamma,retalpha] = solvePDE(rbf, lap_rbf, w, Xin, Xte, f, realSol)
+function [bestgamma,retalpha] = solvePDE(rbf, lap_rbf, lap2_rbf, w, Xin, Xte, f, realSol, symmetric)
 step = 0.125;
 gammapot = -1.5:step:3;
 gamma = 10.^gammapot;
@@ -13,12 +13,16 @@ bestgamma = gamma(1);
 
 for i = 1:length(gamma)
     % Kollokationsmatrix erstellen
-    A_Lambda = lap_rbf(gamma(i), Xin(:,1), Xin(:,2), Xin(:,1).', Xin(:,2).');
+    if symmetric == 0
+        A_Lambda = lap_rbf(gamma(i), Xin(:,1), Xin(:,2), Xin(:,1).', Xin(:,2).');
+    else
+        A_Lambda = lap2_rbf(gamma(i), Xin(:,1), Xin(:,2), Xin(:,1).', Xin(:,2).');
+    end
     %Approximieren der DGL
     alpha = A_Lambda\b;
     
     %Vergleich
-    error(i) = calculate_error(alpha, Xin, Xte, gamma(i), rbf, lap_rbf, f, w, realSol);
+    error(i) = calculate_error(alpha, Xin, Xte, gamma(i), rbf, lap_rbf, lap2_rbf, f, w, realSol, symmetric);
 %     condition(i) = cond(A_Lambda);
     if error(i) < minerror
         minerror = error(i);
@@ -27,6 +31,7 @@ for i = 1:length(gamma)
     end
 end
 
+minerror
 % while bestgamma == gamma(1)
 %     gammapot = [(gammapot(1) - step) , gammapot];
 %     gamma = [10^gammapot(1) gamma];
