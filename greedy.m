@@ -3,20 +3,20 @@ warning off MATLAB:nearlySingularMatrix
 %% Settings
 grid = 1;
 m = 2;
-n = 70;
+n = 200;
 symmetric = 0;
-kernel = 'wendland';
+kernel = 'gauss';
 pde = 'square';
 
 %% Setup
 
-[rbf, lap_rbf, lap2_rbf, f, w, realSol, realSolPlot] = allFunctions(kernel, pde);
+[rbf, lap_rbf, lap2_rbf, f, w, realSol, realSolPlot] = allFunctions(kernel, pde, symmetric);
 error = zeros(size(n));
 gamma = zeros(size(n));
 
 % Bestimmung der Kollokations- und Testpunkte
 [Xin, xlow, xup, ylow, yup] = collocation_points(w,m, grid);
-Xte = collocation_points(w,34, grid);
+Xte = collocation_points(w,31, grid);
 grideval = collocation_points(w,100, grid);
 z = realSolPlot(grideval(:,1), grideval(:,2));
 
@@ -34,12 +34,13 @@ for i = 1:n
     z(index) = [];
 end
 
+[gamma, alpha] = solvePDE(rbf, lap_rbf, lap2_rbf, w, Xin, Xte, f, realSol, symmetric);
 
 %% Plot
 figure
 semilogy((1:n)+m,error)
 xlabel('amount of collocation points')
-ylabel('max. absolute error')
+ylabel('max. error in derivative')
 title(kernel)
 
 figure
@@ -55,5 +56,4 @@ title(kernel)
 % plot(Xte(:,1),Xte(:,2),'b*')
 % hold off
 
-[gamma, alpha] = solvePDE(rbf, lap_rbf, lap2_rbf, w, Xin, Xte, f, realSol, symmetric);
 plot_sol(Xin, Xte, xlow, xup, ylow, yup, w, rbf, lap_rbf, gamma, alpha, realSolPlot, symmetric)

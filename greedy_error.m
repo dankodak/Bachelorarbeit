@@ -1,7 +1,6 @@
 function [error , index] = greedy_error(rbf, lap_rbf, lap2_rbf, w, f, gamma, alpha, Xin, grideval, z, symmetric, setting)
 switch setting
     case 'abs'
-        
         A_eval = evaluation_matrix(rbf, lap_rbf, gamma, Xin, grideval, w, symmetric);
         s_u = A_eval*alpha;
         error = max(abs(s_u - z));

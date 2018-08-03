@@ -35,7 +35,7 @@ surf(xx,yy,s_u)
 subplot(2,2,4)
 surf(xx,yy,z)
 
-
+% Plot Vergleich approximierte und analytische Lösung
 figure
 imagesc(abs(s_u - z))
 colorbar
