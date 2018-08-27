@@ -1,8 +1,8 @@
-function plot_sol(Xin, Xte, xlow, xup, ylow, yup, w, rbf, lap_rbf, gamma, alpha, realSolPlot, symmetric)
+function plot_sol(Xin, Xte, xlow, xup, ylow, yup, w, rbf, lap_rbf, gamma, alpha, realSolPlot, symmetric, amount_points, error)
 n = 100;
 
 
-% Plot Kollokations- und Testpunkte
+%% Plot Kollokations- und Testpunkte
 a = linspace(0,2*pi);
 figure
 axis equal
@@ -13,11 +13,11 @@ plot(cos(a),sin(a))
 hold off
 
 
-% Plot Loesung
+%% Plot Loesung
 [xx, yy] = ndgrid(linspace(xlow, xup, n),linspace(ylow, yup, n));
 X = [xx(:), yy(:)];
 bool = w(X(:,1), X(:,2)) < 0;
-A_eval = evaluation_matrix(rbf, lap_rbf, gamma, Xin, X, w, symmetric);
+A_eval = evaluation_matrix(rbf, lap_rbf, gamma(end), Xin, X, w, symmetric);
 s_u = A_eval * alpha;
 s_u(bool) = 0;
 s_u = reshape(s_u,[n,n]);
@@ -35,9 +35,22 @@ surf(xx,yy,s_u)
 subplot(2,2,4)
 surf(xx,yy,z)
 
-% Plot Vergleich approximierte und analytische Lösung
+%% Plot Vergleich approximierte und analytische Lösung
 figure
 imagesc(abs(s_u - z))
 colorbar
+
+%% Plot Fehler gegen Anzahl Kollokationspunkte
+figure
+semilogy(amount_points, error)
+xlabel('amount of collocation points')
+ylabel('max. error in derivative/absolute')
+title('Wendland/Gauss kernel')
+
+%% Plot Bestes Gamma gegen Anzahl Kollokationspunkte
+figure
+semilogy(amount_points, gamma)
+xlabel('amount of collocation points')
+ylabel('gamma')
 end
 

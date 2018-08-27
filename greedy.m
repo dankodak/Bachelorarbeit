@@ -2,8 +2,7 @@ clc; clear;
 warning off MATLAB:nearlySingularMatrix
 %% Settings
 grid = 1;
-m = 2;
-n = 200;
+n = 10;
 symmetric = 0;
 kernel = 'gauss';
 pde = 'square';
@@ -11,11 +10,11 @@ pde = 'square';
 %% Setup
 
 [rbf, lap_rbf, lap2_rbf, f, w, realSol, realSolPlot] = allFunctions(kernel, pde, symmetric);
-error = zeros(size(n));
-gamma = zeros(size(n));
+error = zeros(1,n);
+gamma = zeros(1,n);
 
 % Bestimmung der Kollokations- und Testpunkte
-[Xin, xlow, xup, ylow, yup] = collocation_points(w,m, grid);
+[Xin, xlow, xup, ylow, yup] = collocation_points(w,0, grid);
 Xte = collocation_points(w,31, grid);
 grideval = collocation_points(w,100, grid);
 z = realSolPlot(grideval(:,1), grideval(:,2));
@@ -34,26 +33,11 @@ for i = 1:n
     z(index) = [];
 end
 
-[gamma, alpha] = solvePDE(rbf, lap_rbf, lap2_rbf, w, Xin, Xte, f, realSol, symmetric);
-
 %% Plot
-figure
-semilogy((1:n)+m,error)
-xlabel('amount of collocation points')
-ylabel('max. error in derivative')
-title(kernel)
+[gamma(n+1), alpha] = solvePDE(rbf, lap_rbf, lap2_rbf, w, Xin, Xte, f, realSol, symmetric);
+[error(n+1) , index] = greedy_error(rbf, lap_rbf, lap2_rbf, w, f, gamma(n+1), alpha, Xin, grideval, z, symmetric, 'res');
+gamma = gamma(2:n+1);
+error = error(2:n+1);
+amount_points = (1:n);
 
-figure
-semilogy((1:n)+m,gamma)
-xlabel('amount of collocation points')
-ylabel('gamma')
-title(kernel)
-
-% figure
-% axis equal
-% hold on
-% plot(Xin(:,1),Xin(:,2),'r+')% points inside
-% plot(Xte(:,1),Xte(:,2),'b*')
-% hold off
-
-plot_sol(Xin, Xte, xlow, xup, ylow, yup, w, rbf, lap_rbf, gamma, alpha, realSolPlot, symmetric)
+plot_sol(Xin, Xte, xlow, xup, ylow, yup, w, rbf, lap_rbf, gamma, alpha, realSolPlot, symmetric, amount_points, error)
