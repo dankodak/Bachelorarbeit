@@ -5,7 +5,7 @@ function collocOnGrid(grids, m, symmetric, kernel, pde, calc_error)
     % grids = 1;
     % m = 4:4:28;
     % symmetric = 0;
-    % kernel = 'wendland';
+    % kernel = 'gauss';
     % pde = 'square';
 
     %% Setup
@@ -22,13 +22,12 @@ function collocOnGrid(grids, m, symmetric, kernel, pde, calc_error)
     for i = m
         i
         Xin = collocation_points(w,i,grids);
-        Xbd = boundary_points(i);
-        [gamma(k), alpha] = solvePDE(rbf, lap_rbf, lap2_rbf, w, Xin, Xbd, Xte, f, realSol, symmetric);
-        A_eval = evaluation_matrix(rbf, lap_rbf, gamma(k), Xin, Xbd, grideval, w, symmetric);
+        [gamma(k), alpha] = solvePDE(rbf, lap_rbf, lap2_rbf, w, Xin, Xte, f, realSol, symmetric);
+        A_eval = evaluation_matrix(rbf, lap_rbf, gamma(k), Xin, grideval, w, symmetric);
         s_u = A_eval*alpha;
-        [error(k), ~] = greedy_error(rbf, lap_rbf, lap2_rbf, w, f, gamma(k), alpha, Xin, Xbd, grideval, z, symmetric, calc_error);
+        [error(k), ~] = greedy_error(rbf, lap_rbf, lap2_rbf, w, f, gamma(k), alpha, Xin, grideval, z, symmetric, calc_error);
         amount_points(k) = size(Xin,1);
         k = k + 1;
     end
-    plot_sol(Xin, Xbd, Xte, xlow, xup, ylow, yup, w, f, rbf, lap_rbf, lap2_rbf, gamma, alpha, realSolPlot, symmetric, amount_points, error)
+    plot_sol(Xin, Xte, xlow, xup, ylow, yup, w, rbf, lap_rbf, gamma, alpha, realSolPlot, symmetric, amount_points, error)
 end

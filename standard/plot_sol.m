@@ -1,9 +1,9 @@
-function plot_sol(Xin, Xbd, Xte, xlow, xup, ylow, yup, w, rbf, lap_rbf, gamma, alpha, realSolPlot, symmetric, amount_points, error)
+function plot_sol(Xin, Xbd, Xte, xlow, xup, ylow, yup, w, f, rbf, lap_rbf, lap2_rbf, gamma, alpha, realSolPlot, symmetric, amount_points, error)
 n = 100;
 
 
 %% Plot Kollokations- und Testpunkte
-a = linspace(0,2*pi);
+% a = linspace(0,2*pi);
 figure
 axis equal
 hold on
@@ -40,6 +40,25 @@ surf(xx,yy,z)
 figure
 imagesc(abs(s_u - z))
 colorbar
+title('absolute error when compared to exact solution')
+
+%% Plot Vergleich approximierte und analytische Lösung in der Ableitung
+points = [Xin; Xbd];
+if symmetric == 0
+    A = lap_rbf(gamma(end), X(:,1), X(:,2), points(:,1).', points(:,2).');
+else
+    A = [lap2_rbf(gamma(end), X(:,1), X(:,2), Xin(:,1).', Xin(:,2).'), lap_rbf(gamma(end), X(:,1), X(:,2), Xbd(:,1).', Xbd(:,2).')];
+end
+disc = A*alpha;
+disc(bool) = 0;
+disc = reshape(disc,[n,n]);
+real = f(X(:,1), X(:,2));
+real(bool) = 0;
+real = reshape(real,[n,n]);
+figure
+imagesc(abs(disc - real))
+colorbar
+title('error in derivative when compared to PDE')
 
 %% Plot Fehler gegen Anzahl Kollokationspunkte
 figure

@@ -66,7 +66,7 @@ while bestgamma == gamma(end)
 end
 
 
-minerror
+% minerror
 
 
 % figure
