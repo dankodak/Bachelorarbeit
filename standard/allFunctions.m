@@ -4,6 +4,7 @@ syms a b c d gammas rbfs lap_rbfs ws prods fs realSols realSolPlots
 switch pde
     case 'square'
         ws(a,b)= -a^2 - b^2 + 2 -sqrt(a^4 - 2*a^2 + b^4 - 2*b^2 +2);
+%         ws(a,b)= 4 - sqrt(2*a^2 + 2) - sqrt(2*b^2+2) - sqrt( (2-sqrt(2*a^2 +2))^2 + (2-sqrt(2*b^2 +2))^2);
         fs(a,b) = - 2*pi^2*sin(pi*a)*sin(pi*b);
 %         realSols(a,b) = sin(pi*a)*sin(pi*b);
         realSols(a,b) = 0;

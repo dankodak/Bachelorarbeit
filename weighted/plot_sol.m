@@ -1,17 +1,16 @@
-function plot_sol(Xin, Xte, xlow, xup, ylow, yup, w, rbf, lap_rbf, gamma, alpha, realSolPlot, symmetric, amount_points, error)
+function plot_sol(Xin, Xte, xlow, xup, ylow, yup, w, f, rbf, lap_rbf, lap2_rbf, gamma, alpha, realSolPlot, symmetric, amount_points, error)
 n = 100;
 
 
 %% Plot Kollokations- und Testpunkte
-a = linspace(0,2*pi);
+% a = linspace(0,2*pi);
 figure
 axis equal
 hold on
 plot(Xin(:,1),Xin(:,2),'r+')% points inside
 plot(Xte(:,1),Xte(:,2),'b*')
-plot(cos(a),sin(a))
+% plot(cos(a),sin(a))
 hold off
-
 
 %% Plot Loesung
 [xx, yy] = ndgrid(linspace(xlow, xup, n),linspace(ylow, yup, n));
@@ -35,22 +34,42 @@ surf(xx,yy,s_u)
 subplot(2,2,4)
 surf(xx,yy,z)
 
+%% Plot Vergleich approximierte und analytische Lösung in der Ableitung
+if symmetric == 0
+    A = lap_rbf(gamma(end), X(:,1), X(:,2), Xin(:,1).', Xin(:,2).');
+else
+    A = lap2_rbf(gamma(end), X(:,1), X(:,2), Xin(:,1).', Xin(:,2).');
+end
+disc = A*alpha;
+disc(bool) = 0;
+disc = reshape(disc,[n,n]);
+real = f(X(:,1), X(:,2));
+real(bool) = 0;
+real = reshape(real,[n,n]);
+figure
+imagesc(abs(disc - real))
+colorbar
+title('error in derivative when compared to PDE')
+
 %% Plot Vergleich approximierte und analytische Lösung
 figure
 imagesc(abs(s_u - z))
 colorbar
+title('absolute error when compared to exact solution')
 
 %% Plot Fehler gegen Anzahl Kollokationspunkte
 figure
 semilogy(amount_points, error)
 xlabel('amount of collocation points')
 ylabel('max. error in derivative/absolute')
-title('Wendland/Gauss kernel')
+title('error plot')
 
 %% Plot Bestes Gamma gegen Anzahl Kollokationspunkte
 figure
 semilogy(amount_points, gamma)
 xlabel('amount of collocation points')
 ylabel('gamma')
+title('gamma plot')
+
 end
 

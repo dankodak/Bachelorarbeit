@@ -13,7 +13,6 @@ plot(Xte(:,1),Xte(:,2),'b*')
 % plot(cos(a),sin(a))
 hold off
 
-
 %% Plot Loesung
 [xx, yy] = ndgrid(linspace(xlow, xup, n),linspace(ylow, yup, n));
 X = [xx(:), yy(:)];
@@ -65,12 +64,14 @@ figure
 semilogy(amount_points, error)
 xlabel('amount of collocation points')
 ylabel('max. error in derivative/absolute')
-title('Wendland/Gauss kernel')
+title('error plot')
 
 %% Plot Bestes Gamma gegen Anzahl Kollokationspunkte
 figure
 semilogy(amount_points, gamma)
 xlabel('amount of collocation points')
 ylabel('gamma')
+title('gamma plot')
+
 end
 

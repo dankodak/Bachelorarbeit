@@ -29,5 +29,5 @@ function collocOnGrid(grids, m, symmetric, kernel, pde, calc_error)
         amount_points(k) = size(Xin,1);
         k = k + 1;
     end
-    plot_sol(Xin, Xte, xlow, xup, ylow, yup, w, rbf, lap_rbf, gamma, alpha, realSolPlot, symmetric, amount_points, error)
+    plot_sol(Xin, Xte, xlow, xup, ylow, yup, w, f, rbf, lap_rbf, lap2_rbf, gamma, alpha, realSolPlot, symmetric, amount_points, error)
 end
