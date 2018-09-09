@@ -22,7 +22,7 @@ function collocOnGrid(grids, m, symmetric, kernel, pde, calc_error)
     for i = m
         i
         Xin = collocation_points(w,i,grids);
-        Xbd = boundary_points(i);
+        Xbd = boundary_points(i, pde);
 %         Xbd = zeros(0,2);
         [gamma(k), alpha] = solvePDE(rbf, lap_rbf, lap2_rbf, w, Xin, Xbd, Xte, f, realSol, symmetric);
         A_eval = evaluation_matrix(rbf, lap_rbf, gamma(k), Xin, Xbd, grideval, w, symmetric);

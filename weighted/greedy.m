@@ -1,4 +1,4 @@
-function greedy(n, symmetric, kernel, pde)
+function greedy(n, symmetric, kernel, pde, calc_error)
     % clc; clear;
     % warning off MATLAB:nearlySingularMatrix
     % %% Settings
@@ -27,8 +27,10 @@ function greedy(n, symmetric, kernel, pde)
         [gamma(i), alpha] = solvePDE(rbf, lap_rbf, lap2_rbf, w, Xin, Xte, f, realSol, symmetric);
         % plot_sol(Xin, Xte, xlow, xup, ylow, yup, w, rbf, gamma, alpha, realSolPlot)
         A_eval = evaluation_matrix(rbf, lap_rbf, gamma(i), Xin, grideval, w, symmetric);
-        s_u = A_eval*alpha;
         [error(i) , index] = greedy_error(rbf, lap_rbf, lap2_rbf, w, f, gamma(i), alpha, Xin, grideval, z, symmetric, 'res');
+        if calc_error == "abs"
+            [error(i) , ~] = greedy_error(rbf, lap_rbf, lap2_rbf, w, f, gamma(i), alpha, Xin, grideval, z, symmetric, 'abs');
+        end
         Xin(end+1,:) = grideval(index(1),:);
         grideval(index,:) = [];
         z(index) = [];
@@ -36,7 +38,11 @@ function greedy(n, symmetric, kernel, pde)
 
     %% Plot
     [gamma(n+1), alpha] = solvePDE(rbf, lap_rbf, lap2_rbf, w, Xin, Xte, f, realSol, symmetric);
-    [error(n+1) , index] = greedy_error(rbf, lap_rbf, lap2_rbf, w, f, gamma(n+1), alpha, Xin, grideval, z, symmetric, 'res');
+    if calc_error == "abs"
+        [error(n+1) , ~] = greedy_error(rbf, lap_rbf, lap2_rbf, w, f, gamma(n+1), alpha, Xin, grideval, z, symmetric, 'abs');
+    else
+        [error(n+1) , ~] = greedy_error(rbf, lap_rbf, lap2_rbf, w, f, gamma(n+1), alpha, Xin, grideval, z, symmetric, 'res');
+    end
     gamma = gamma(2:n+1);
     error = error(2:n+1);
     amount_points = (1:n);

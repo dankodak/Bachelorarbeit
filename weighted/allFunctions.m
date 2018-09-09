@@ -16,17 +16,34 @@ switch pde
         realSolPlot = matlabFunction(realSolPlots);
     case 'circle'
         ws(a,b) = 1 - a^2 - b^2;
-        fs(a,b) = exp(-a^2-b^2)*(-4+4*(a^2+b^2));
-        % realSols(a,b) = exp(-a^2-b^2) - 1/exp(1);
+        fs(a,b) = exp(-a^2-b^2)*(-4+4*(a^2+b^2)); %1
+%         fs(a,b) = 2*sin(a)*((a^2+b^2-3)*cos(b) + 2 * b * sin(b)) - 4*a * cos(a) * cos(b); %2
+%         fs(a,b) = -(exp(a^2+b^2)*(4*a^2+4*b^2+3)+exp(1))*sin(a) - 4*a*exp(a^2+b^2)*cos(a); %3
+        % realSols(a,b) = exp(-a^2-b^2) - 1/exp(1); %1
+%         realSols(a,b) = (1-a^2-b^2)*sin(a)*cos(b); %2
+%         realSols(a,b) = (-exp(a^2+b^2)+exp(1))*sin(a); %3
         realSols(a,b) = 0;
-        realSolPlots(a,b) = exp(-a^2-b^2) - 1/exp(1);
+        realSolPlots(a,b) = exp(-a^2-b^2) - 1/exp(1); %1
+%         realSolPlots(a,b) = (1-a^2-b^2)*sin(a)*cos(b); %2
+%         realSolPlots(a,b) = (-exp(a^2+b^2)+exp(1))*sin(a); %3
         
         w = matlabFunction(ws);
         f = matlabFunction(fs);
         realSol = matlabFunction(realSols);
         realSolPlot = matlabFunction(realSolPlots);
-    case 'newone'
+    case 'twocircles'
         ws(a,b) = 6 - 2*a^2-2*b^2 - sqrt( (3-a^2+2*a-b^2)^2 + (3-a^2-2*a-b^2)^2);
+        fs(a,b) = - 2*pi^2*sin(pi*a)*sin(pi*b);
+        % realSols(a,b) = exp(-a^2-b^2) - 1/exp(1);
+        realSols(a,b) = 0;
+        realSolPlots(a,b) = a + b;
+        
+        w = matlabFunction(ws);
+        f = matlabFunction(fs);
+        realSol = matlabFunction(realSols);
+        realSolPlot = matlabFunction(realSolPlots);
+    case 'disc'
+        ws(a,b) = 3 - sqrt( (4-a^2-b^2)^2 + (a^2+b^2-1)^2);
         fs(a,b) = - 2*pi^2*sin(pi*a)*sin(pi*b);
         % realSols(a,b) = exp(-a^2-b^2) - 1/exp(1);
         realSols(a,b) = 0;
@@ -67,8 +84,8 @@ switch kernel
                 lap_rbf = matlabFunction(diff(prods,a,2) + diff(prods,b,2));
                 lap2_rbf = 0;
             case 1
-                ws(a,b) = ws(a,b)^3;
-                w = matlabFunction(ws);
+%                 ws(a,b) = ws(a,b)^3;
+%                 w = matlabFunction(ws);
                 rbfs(gammas,a,b,c,d) = ws(a,b) * ws(c,d) * exp(-gammas*((c-a)^2 + (d-b)^2));
                 rbf = matlabFunction(rbfs);
                 lap_rbfs = diff(rbfs,a,2) + diff(rbfs,b,2);
