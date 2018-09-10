@@ -6,9 +6,9 @@ switch pde
         ws(a,b)= -a^2 - b^2 + 2 -sqrt(a^4 - 2*a^2 + b^4 - 2*b^2 +2);
 %         ws(a,b)= 4 - sqrt(2*a^2 + 2) - sqrt(2*b^2+2) - sqrt( (2-sqrt(2*a^2 +2))^2 + (2-sqrt(2*b^2 +2))^2);
         fs(a,b) = - 2*pi^2*sin(pi*a)*sin(pi*b);
-%         realSols(a,b) = sin(pi*a)*sin(pi*b);
+%         realSols(a,b) = -sin(pi*a)*sin(pi*b);
         realSols(a,b) = 0;
-        realSolPlots(a,b) = sin(pi*a)*sin(pi*b);
+        realSolPlots(a,b) = -sin(pi*a)*sin(pi*b);
         
         w = matlabFunction(ws);
         f = matlabFunction(fs);
@@ -19,13 +19,13 @@ switch pde
         fs(a,b) = exp(-a^2-b^2)*(-4+4*(a^2+b^2)); %1
 %         fs(a,b) = 2*sin(a)*((a^2+b^2-3)*cos(b) + 2 * b * sin(b)) - 4*a * cos(a) * cos(b); %2
 %         fs(a,b) = -(exp(a^2+b^2)*(4*a^2+4*b^2+3)+exp(1))*sin(a) - 4*a*exp(a^2+b^2)*cos(a); %3
-        % realSols(a,b) = exp(-a^2-b^2) - 1/exp(1); %1
-%         realSols(a,b) = (1-a^2-b^2)*sin(a)*cos(b); %2
-%         realSols(a,b) = (-exp(a^2+b^2)+exp(1))*sin(a); %3
+        % realSols(a,b) = -(exp(-a^2-b^2) - 1/exp(1)); %1
+%         realSols(a,b) = -(1-a^2-b^2)*sin(a)*cos(b); %2
+%         realSols(a,b) = -(-exp(a^2+b^2)+exp(1))*sin(a); %3
         realSols(a,b) = 0;
-        realSolPlots(a,b) = exp(-a^2-b^2) - 1/exp(1); %1
-%         realSolPlots(a,b) = (1-a^2-b^2)*sin(a)*cos(b); %2
-%         realSolPlots(a,b) = (-exp(a^2+b^2)+exp(1))*sin(a); %3
+        realSolPlots(a,b) = -(exp(-a^2-b^2) - 1/exp(1)); %1
+%         realSolPlots(a,b) = -(1-a^2-b^2)*sin(a)*cos(b); %2
+%         realSolPlots(a,b) = -(-exp(a^2+b^2)+exp(1))*sin(a); %3
         
         w = matlabFunction(ws);
         f = matlabFunction(fs);
@@ -34,7 +34,6 @@ switch pde
     case 'disc'
         ws(a,b) = 3 - sqrt( (4-a^2-b^2)^2 + (a^2+b^2-1)^2);
         fs(a,b) = - 2*pi^2*sin(pi*a)*sin(pi*b);
-        % realSols(a,b) = exp(-a^2-b^2) - 1/exp(1);
         realSols(a,b) = 0;
         realSolPlots(a,b) = a + b;
         
@@ -51,15 +50,15 @@ switch kernel
                 rbfs(gammas,a,b,c,d) = (1 - gammas*((c-a)^2 + (d-b)^2))^4 * (4*gammas*((c-a)^2 + (d-b)^2) + 1)/(20*gammas^2);
 %                 rbfs(gammas,a,b,c,d) = ((1-gammas*((c-a)^2 + (d-b)^2))^6 * (3+gammas*((c-a)^2 + (d-b)^2) * (18 + 35* gammas * ((c-a)^2 + (d-b)^2))))/(1680*gammas^4);
                 rbf1 = matlabFunction(rbfs);
-                lap_rbf1 = matlabFunction(diff(rbfs,a,2) + diff(rbfs,b,2));
+                lap_rbf1 = matlabFunction(-diff(rbfs,a,2) - diff(rbfs,b,2));
                 lap2_rbf1 = 0;
                 [rbf, lap_rbf, lap2_rbf] = wendland(rbf1, lap_rbf1, lap2_rbf1);
             case 1
                 rbfs(gammas,a,b,c,d) =((1-gammas*((c-a)^2 + (d-b)^2))^6 * (3+gammas*((c-a)^2 + (d-b)^2) * (18 + 35* gammas * ((c-a)^2 + (d-b)^2))))/(1680*gammas^4);
                 rbf1 = matlabFunction(rbfs);
-                lap_rbf1s = diff(rbfs,a,2) + diff(rbfs,b,2);
+                lap_rbf1s = -diff(rbfs,a,2) - diff(rbfs,b,2);
                 lap_rbf1 = matlabFunction(lap_rbf1s);
-                lap2_rbf1 = matlabFunction(diff(lap_rbf1s,c,2) + diff(lap_rbf1s,d,2));
+                lap2_rbf1 = matlabFunction(-diff(lap_rbf1s,c,2) - diff(lap_rbf1s,d,2));
                 [rbf, lap_rbf, lap2_rbf] = wendland(rbf1, lap_rbf1, lap2_rbf1);
                 
         end
@@ -68,14 +67,14 @@ switch kernel
             case 0
                 rbfs(gammas,a,b,c,d) = exp(-gammas*((c-a)^2 + (d-b)^2));
                 rbf = matlabFunction(rbfs);
-                lap_rbf = matlabFunction(diff(rbfs,a,2) + diff(rbfs,b,2));
+                lap_rbf = matlabFunction(-diff(rbfs,a,2) - diff(rbfs,b,2));
                 lap2_rbf = 0;
             case 1
                 rbfs(gammas,a,b,c,d) = exp(-gammas*((c-a)^2 + (d-b)^2));
                 rbf = matlabFunction(rbfs);
-                lap_rbfs = diff(rbfs,a,2) + diff(rbfs,b,2);
+                lap_rbfs = -diff(rbfs,a,2) - diff(rbfs,b,2);
                 lap_rbf = matlabFunction(lap_rbfs);
-                lap2_rbf = matlabFunction(diff(lap_rbfs,c,2) + diff(lap_rbfs,d,2));
+                lap2_rbf = matlabFunction(-diff(lap_rbfs,c,2) - diff(lap_rbfs,d,2));
         end
 end
 

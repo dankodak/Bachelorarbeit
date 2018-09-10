@@ -1,6 +1,6 @@
 function [bestgamma,retalpha] = solvePDE(rbf, lap_rbf, lap2_rbf, w, Xin, Xbd, Xte, f, realSol, symmetric)
 step = 0.125;
-gammapot = -1:step:2.5;
+gammapot = -1:step:2;
 gamma = 10.^gammapot;
 
 %Auswertung der DGL an den Teststellen
