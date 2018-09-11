@@ -11,6 +11,7 @@ plot(Xin(:,1),Xin(:,2),'r+')% points inside
 plot(Xbd(:,1),Xbd(:,2),'go')% points on border
 plot(Xte(:,1),Xte(:,2),'b*')
 % plot(cos(a),sin(a))
+legend("Kollokationspunkte", "Testpunkte")
 hold off
 
 %% Plot Loesung

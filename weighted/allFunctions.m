@@ -5,10 +5,10 @@ switch pde
     case 'square'
         ws(a,b)= -a^2 - b^2 + 2 -sqrt(a^4 - 2*a^2 + b^4 - 2*b^2 +2);
 %         ws(a,b)= 4 - sqrt(2*a^2 + 2) - sqrt(2*b^2+2) - sqrt( (2-sqrt(2*a^2 +2))^2 + (2-sqrt(2*b^2 +2))^2);
-        fs(a,b) = - 2*pi^2*sin(pi*a)*sin(pi*b);
-%         realSols(a,b) = -sin(pi*a)*sin(pi*b);
+        fs(a,b) = 2*pi^2*sin(pi*a)*sin(pi*b);
+%         realSols(a,b) = sin(pi*a)*sin(pi*b);
         realSols(a,b) = 0;
-        realSolPlots(a,b) = -sin(pi*a)*sin(pi*b);
+        realSolPlots(a,b) = sin(pi*a)*sin(pi*b);
         
         w = matlabFunction(ws);
         f = matlabFunction(fs);
@@ -67,9 +67,9 @@ switch kernel
             case 1
                 rbfs(gammas,a,b,c,d) = ws(a,b) * ws(c,d) * ((1-gammas*((c-a)^2 + (d-b)^2))^6 * (3+gammas*((c-a)^2 + (d-b)^2) * (18 + 35* gammas * ((c-a)^2 + (d-b)^2))))/(1680*gammas^4);
                 rbf1 = matlabFunction(rbfs);
-                lap_rbf1s = -diff(rbfs,a,2) - diff(rbfs,b,2);
+                lap_rbf1s = -diff(rbfs,c,2) - diff(rbfs,d,2);
                 lap_rbf1 = matlabFunction(lap_rbf1s);
-                lap2_rbf1 = matlabFunction(-diff(lap_rbf1s,c,2) - diff(lap_rbf1s,d,2));
+                lap2_rbf1 = matlabFunction(-diff(lap_rbf1s,a,2) - diff(lap_rbf1s,b,2));
                 [rbf, lap_rbf, lap2_rbf] = wendland(rbf1, lap_rbf1, lap2_rbf1);
                 
         end
@@ -86,9 +86,9 @@ switch kernel
 %                 w = matlabFunction(ws);
                 rbfs(gammas,a,b,c,d) = ws(a,b) * ws(c,d) * exp(-gammas*((c-a)^2 + (d-b)^2));
                 rbf = matlabFunction(rbfs);
-                lap_rbfs = -diff(rbfs,a,2) - diff(rbfs,b,2);
+                lap_rbfs = -diff(rbfs,c,2) - diff(rbfs,d,2);
                 lap_rbf = matlabFunction(lap_rbfs);
-                lap2_rbf = matlabFunction(-diff(lap_rbfs,c,2) - diff(lap_rbfs,d,2));
+                lap2_rbf = matlabFunction(-diff(lap_rbfs,a,2) - diff(lap_rbfs,b,2));
         end
 end
 

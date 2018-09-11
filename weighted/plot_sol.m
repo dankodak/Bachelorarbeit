@@ -3,13 +3,19 @@ n = 100;
 
 
 %% Plot Kollokations- und Testpunkte
-% a = linspace(0,2*pi);
+a = [-1 -1
+    -1 1
+    1 1
+    1 -1
+    -1 -1];
 figure
 axis equal
 hold on
 plot(Xin(:,1),Xin(:,2),'r+')% points inside
 plot(Xte(:,1),Xte(:,2),'b*')
+plot(a(:,1), a(:,2))
 % plot(cos(a),sin(a))
+legend("Kollokationspunkte", "Testpunkte")
 hold off
 
 %% Plot Loesung
