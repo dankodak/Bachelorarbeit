@@ -74,5 +74,11 @@ xlabel('amount of collocation points')
 ylabel('gamma')
 title('gamma plot')
 
+%% Plot Rand
+b = [linspace(-1,1,100).' -ones(100,1)];
+A_eval = evaluation_matrix(rbf, lap_rbf, gamma(end), Xin, Xbd, b, w, symmetric);
+border = A_eval * alpha;
+figure
+plot(b(:,1),border)
 end
 

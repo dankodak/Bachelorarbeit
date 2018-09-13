@@ -13,7 +13,7 @@ function collocOnGrid(grids, m, symmetric, kernel, pde, calc_error)
     error = zeros(size(m));
     gamma = zeros(size(m));
     amount_points = length(m);
-    [Xte, xlow, xup, ylow, yup] = collocation_points(w,100, 0);
+    [Xte, xlow, xup, ylow, yup] = collocation_points(w,43, 1);
     grideval = collocation_points(w,100, 1);
     z = realSolPlot(grideval(:,1), grideval(:,2));
     k = 1;
@@ -23,7 +23,6 @@ function collocOnGrid(grids, m, symmetric, kernel, pde, calc_error)
         i
         Xin = collocation_points(w,i,grids);
         Xbd = boundary_points(i, pde);
-%         Xbd = zeros(0,2);
         [gamma(k), alpha] = solvePDE(rbf, lap_rbf, lap2_rbf, w, Xin, Xbd, Xte, f, realSol, symmetric);
         A_eval = evaluation_matrix(rbf, lap_rbf, gamma(k), Xin, Xbd, grideval, w, symmetric);
         s_u = A_eval*alpha;
