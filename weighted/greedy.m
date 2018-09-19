@@ -1,12 +1,4 @@
-function greedy(n, symmetric, kernel, pde, calc_error)
-    % clc; clear;
-    % warning off MATLAB:nearlySingularMatrix
-    % %% Settings
-    % grid = 1;
-    % n = 10;
-    % symmetric = 0;
-    % kernel = 'gauss';
-    % pde = 'square';
+function greedy(n, test_grid, test, symmetric, kernel, pde, calc_error)
 
     %% Setup
 
@@ -16,7 +8,7 @@ function greedy(n, symmetric, kernel, pde, calc_error)
 
     % Bestimmung der Kollokations- und Testpunkte
     [Xin, xlow, xup, ylow, yup] = collocation_points(w,0, 1);
-    Xte = collocation_points(w,31, 1);
+    Xte = collocation_points(w,test, test_grid);
     grideval = collocation_points(w,100, 1);
     z = realSolPlot(grideval(:,1), grideval(:,2));
 

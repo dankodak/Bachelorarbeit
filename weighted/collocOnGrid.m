@@ -1,4 +1,4 @@
-function collocOnGrid(grids, m, symmetric, kernel, pde, calc_error)
+function collocOnGrid(grids, test_grid, m, test, symmetric, kernel, pde, calc_error)
     % clc; clear;
     % warning off MATLAB:nearlySingularMatrix
     % %% Settings
@@ -13,7 +13,7 @@ function collocOnGrid(grids, m, symmetric, kernel, pde, calc_error)
     error = zeros(size(m));
     gamma = zeros(size(m));
     amount_points = length(m);
-    [Xte, xlow, xup, ylow, yup] = collocation_points(w,43, 1);
+    [Xte, xlow, xup, ylow, yup] = collocation_points(w,test, test_grid);
     grideval = collocation_points(w,100, 1);
     z = realSolPlot(grideval(:,1), grideval(:,2));
     k = 1;
