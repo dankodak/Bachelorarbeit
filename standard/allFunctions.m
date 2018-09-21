@@ -16,14 +16,14 @@ switch pde
         realSolPlot = matlabFunction(realSolPlots);
     case 'circle'
         ws(a,b) = 1 - a^2 - b^2;
-        fs(a,b) = exp(-a^2-b^2)*(-4+4*(a^2+b^2)); %1
+        fs(a,b) = -exp(-a^2-b^2)*(-4+4*(a^2+b^2)); %1
 %         fs(a,b) = 2*sin(a)*((a^2+b^2-3)*cos(b) + 2 * b * sin(b)) - 4*a * cos(a) * cos(b); %2
 %         fs(a,b) = -(exp(a^2+b^2)*(4*a^2+4*b^2+3)+exp(1))*sin(a) - 4*a*exp(a^2+b^2)*cos(a); %3
         % realSols(a,b) = -(exp(-a^2-b^2) - 1/exp(1)); %1
 %         realSols(a,b) = -(1-a^2-b^2)*sin(a)*cos(b); %2
 %         realSols(a,b) = -(-exp(a^2+b^2)+exp(1))*sin(a); %3
         realSols(a,b) = 0;
-        realSolPlots(a,b) = -(exp(-a^2-b^2) - 1/exp(1)); %1
+        realSolPlots(a,b) = (exp(-a^2-b^2) - 1/exp(1)); %1
 %         realSolPlots(a,b) = -(1-a^2-b^2)*sin(a)*cos(b); %2
 %         realSolPlots(a,b) = -(-exp(a^2+b^2)+exp(1))*sin(a); %3
         

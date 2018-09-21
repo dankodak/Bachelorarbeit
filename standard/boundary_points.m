@@ -7,6 +7,7 @@ switch pde
             -ones(n,1),linspace(-1,1,n).'];
         Xbd = unique(Xbd, 'rows');
     case "circle"
+        n = 3*n;
         a = linspace(0,2*pi,n).';
         Xbd = [cos(a(1:n-1)), sin(a(1:n-1))];
     case "disc"

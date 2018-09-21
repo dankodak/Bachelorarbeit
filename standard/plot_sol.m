@@ -38,7 +38,7 @@ surf(xx,yy,z)
 
 %% Plot Vergleich approximierte und analytische Lösung
 figure
-imagesc(abs(s_u - z))
+pcolor(xx,yy,abs(s_u - z))
 colorbar
 title('absolute error when compared to exact solution')
 
@@ -56,7 +56,7 @@ real = f(X(:,1), X(:,2));
 real(bool) = 0;
 real = reshape(real,[n,n]);
 figure
-imagesc(abs(disc - real))
+pcolor(xx,yy,abs(disc - real))
 colorbar
 title('error in derivative when compared to PDE')
 
