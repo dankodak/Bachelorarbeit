@@ -58,14 +58,14 @@ switch kernel
         switch symmetric
             case 0  
                 % rbfs(gammas,a,b,c,d) = (1 - gammas*((c-a)^2 + (d-b)^2))^4 * (4*gammas*((c-a)^2 + (d-b)^2) + 1)/(20*gammas^2);
-                rbfs(gammas,a,b,c,d) = ((1-gammas*((c-a)^2 + (d-b)^2))^6 * (3+gammas*((c-a)^2 + (d-b)^2) * (18 + 35* gammas * ((c-a)^2 + (d-b)^2))))/(1680*gammas^4);
+                rbfs(gammas,a,b,c,d) = ((1-gammas*((c-a)^2 + (d-b)^2))^6 * (3+35*((c-a)^2 + (d-b)^2)^2+18*((c-a)^2 + (d-b)^2)))/(1680*gammas^4);
                 prods(gammas,a,b,c,d) = rbfs(gammas,a,b,c,d) * w(a,b);
                 rbf1 = matlabFunction(rbfs);
                 lap_rbf1 = matlabFunction(-diff(prods,a,2) - diff(prods,b,2));
                 lap2_rbf1 = 0;
                 [rbf, lap_rbf, lap2_rbf] = wendland(rbf1, lap_rbf1, lap2_rbf1);
             case 1
-                rbfs(gammas,a,b,c,d) = ws(a,b) * ws(c,d) * ((1-gammas*((c-a)^2 + (d-b)^2))^6 * (3+gammas*((c-a)^2 + (d-b)^2) * (18 + 35* gammas * ((c-a)^2 + (d-b)^2))))/(1680*gammas^4);
+                rbfs(gammas,a,b,c,d) = ((1-gammas*((c-a)^2 + (d-b)^2))^6 * (3+35*((c-a)^2 + (d-b)^2)^2+18*((c-a)^2 + (d-b)^2)))/(1680*gammas^4);
                 rbf1 = matlabFunction(rbfs);
                 lap_rbf1s = -diff(rbfs,c,2) - diff(rbfs,d,2);
                 lap_rbf1 = matlabFunction(lap_rbf1s);
