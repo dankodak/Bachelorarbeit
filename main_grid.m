@@ -2,10 +2,10 @@ clc; clear;
 warning off MATLAB:nearlySingularMatrix
 
 
-setting = 'weighted'; % Choose weighted or standard collocation
+setting = 'standard'; % Choose weighted or standard collocation
 grid = 1; % Collocation Points random or on grid
 test_grid = 1; % Test Points random or on grid
-m = 20; % Amount and steps of Collocation points
+m = 10; % Amount and steps of Collocation points
 test = 17; % Amount of Test Points
 symmetric = 0; % Symmetric or non symmetric collocation
 kernel = 'gauss'; % Choose the kernel

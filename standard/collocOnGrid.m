@@ -1,12 +1,4 @@
 function collocOnGrid(grids, test_grid, m, test, symmetric, kernel, pde, calc_error)
-    % clc; clear;
-    % warning off MATLAB:nearlySingularMatrix
-    % %% Settings
-    % grids = 1;
-    % m = 4:4:28;
-    % symmetric = 0;
-    % kernel = 'wendland';
-    % pde = 'square';
 
     %% Setup
     [rbf, lap_rbf, lap2_rbf, f, w, realSol, realSolPlot] = allFunctions(kernel, pde, symmetric);

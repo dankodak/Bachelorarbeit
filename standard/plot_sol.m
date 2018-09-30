@@ -3,14 +3,12 @@ n = 100;
 
 
 %% Plot Kollokations- und Testpunkte
-% a = linspace(0,2*pi);
 figure
 axis equal
 hold on
 plot(Xin(:,1),Xin(:,2),'r+')% points inside
 plot(Xbd(:,1),Xbd(:,2),'go')% points on border
 plot(Xte(:,1),Xte(:,2),'b*')
-% plot(cos(a),sin(a))
 legend("Kollokationspunkte", "Testpunkte")
 hold off
 
@@ -29,12 +27,16 @@ z = reshape(z, [n,n]);
 figure
 subplot(2,2,1)
 contour(xx,yy,s_u)
+title('numeric solution')
 subplot(2,2,2)
 contour(xx,yy,z)
+title('analytic solution')
 subplot(2,2,3)
 surf(xx,yy,s_u)
+title('numeric solution')
 subplot(2,2,4)
 surf(xx,yy,z)
+title('analytic solution')
 
 %% Plot Vergleich approximierte und analytische Lösung
 figure
@@ -74,11 +76,5 @@ xlabel('amount of collocation points')
 ylabel('gamma')
 title('gamma plot')
 
-%% Plot Rand
-b = [linspace(-1,1,100).' -ones(100,1)];
-A_eval = evaluation_matrix(rbf, lap_rbf, gamma(end), Xin, Xbd, b, w, symmetric);
-border = A_eval * alpha;
-figure
-plot(b(:,1),border)
 end
 

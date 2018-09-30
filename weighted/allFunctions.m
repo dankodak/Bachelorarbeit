@@ -91,17 +91,4 @@ switch kernel
                 lap2_rbf = matlabFunction(-diff(lap_rbfs,a,2) - diff(lap_rbfs,b,2));
         end
 end
-
-
-
-
-%%
-% rbf = matlabFunction(rbfs);
-% w = matlabFunction(ws);
-% f = matlabFunction(fs);
-% realSol = matlabFunction(realSols);
-% realSolPlot = matlabFunction(realSolPlots);
-% prods(gammas,a,b,c,d) = rbfs(gammas,a,b,c,d) * w(a,b);
-% lap_rbf = matlabFunction(diff(prods,a,2) + diff(prods,b,2));
-% lap2_rbf = matlabFunction(diff(prods,a,4) + diff(prods,b,4) + 2*diff(diff(prods,a,2),b,2));
 end

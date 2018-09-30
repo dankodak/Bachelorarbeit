@@ -13,11 +13,6 @@ bestgamma = gamma(1);
 
 for i = 1:length(gamma)
     % Kollokationsmatrix erstellen
-%     if symmetric == 0
-%         A_Lambda = lap_rbf(gamma(i), Xin(:,1), Xin(:,2), Xin(:,1).', Xin(:,2).');
-%     else
-%         A_Lambda = lap2_rbf(gamma(i), Xin(:,1), Xin(:,2), Xin(:,1).', Xin(:,2).');
-%     end
     A_Lambda = collocation_matrix(lap_rbf, lap2_rbf, gamma(i), Xin, symmetric);
     % LGS lösen
     alpha = A_Lambda\b;
@@ -64,10 +59,6 @@ while bestgamma == gamma(end)
         retalpha = alpha;
     end
 end
-
-
-% minerror
-
 
 % figure
 % subplot(1,2,1)
