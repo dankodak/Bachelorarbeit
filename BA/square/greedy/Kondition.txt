@@ -1,0 +1,7 @@
+Kollokationsmatrix:
+Weighted: 1.8711e+05
+Standard: 3.3881e+04
+
+Auswertungsmatrix:
+Weighted: 1.0900e+17
+Standard: 6.8065e+16
